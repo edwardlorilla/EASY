@@ -1,0 +1,215 @@
+v-ons-toolbar ~ #map{
+  margin-top: 45px;
+}
+.search-bar {
+  width: 100%;
+  position: fixed;
+  display: block;
+  margin-top: -45px;
+}
+.after-search-bar {
+  margin-top: -10px;
+}
+
+.list-item-container {
+  line-height: 1;
+  padding: 15px 0px 15px 15px;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+.name {
+  font-weight: 500;
+  line-height: 16px;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.location {
+  font-size: 14px;
+  opacity: 0.4;
+  margin-bottom: 6px;
+}
+
+.desc {
+  line-height: 1.2;
+  font-size: 13px;
+}
+
+.addMarker {
+  position: fixed;
+  z-index: 401;
+
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.autocomplete {
+  position: relative;
+}
+
+.autocomplete-list {
+  position: absolute;
+  z-index: 2;
+  max-height: 50vh;
+  margin: 0;
+
+  padding: 0;
+  border-radius: 4px;
+}
+
+.btn-btn {
+  background: linear-gradient(to right, #A2DB95, #24CCAA);
+
+}
+.btn-stop {
+
+  background: linear-gradient(to right, #ee0979, #ff6a00);
+}
+
+.center-textbox{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: center;
+}
+
+.toolbar--material {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 56px;
+  border-bottom: 0;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
+  padding: 0;
+  background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+  /* background-size: 0; */
+}
+
+
+#main .page__content {
+  top: 0;
+  padding-top: 44px;
+}
+
+#main .toolbar {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+#main.hidden-bar .toolbar{
+  opacity: 0;
+
+  transform: translate3d(0, -44px, 0);
+}
+
+/* Android Material Design */
+
+#main.hidden-bar .toolbar--material {
+  opacity: 0;
+  transform: translate3d(0, -56px, 0);
+}
+
+#main .toolbar--material + .page__background + .page__content {
+  padding-top: 56px;
+}
+
+.profile-wrapper {
+  padding: 16px 10px 0 10px;
+}
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border: inset 1px rgba(0, 0, 0, 0.3);
+}
+
+.profile-name {
+  font-size: 18px;
+  padding: 4px 0 2px 0;
+}
+
+.profile-email {
+  font-size: 15px;
+  opacity: 0.4;
+}
+
+.switch--list-item {
+  margin-right: 0px;
+}
+
+.settings-header {
+  font-weight: 500;
+  font-size: 14px;
+  opacity: 0.4;
+  padding: 10px 0 0px 10px;
+  margin-bottom: -4px;
+}
+
+.settings-list {
+  margin-top: 10px;
+}
+
+.settings-logout {
+  font-size: 24px;
+  opacity: 0.8;
+  margin-right: 6px;
+}
+
+
+.profile-card {
+  width: 100%;
+  text-align: center;
+  color: white;
+  padding: 30px 0;
+  line-height: 1.4;
+  text-shadow: rgba(0, 0, 0, 0.4) 0px 1px 0px;
+}
+
+.profile-image {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  background-color: black;
+  border: 1px solid white;
+  box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 0px 0px;
+  -webkit-box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 0px 0px;
+}
+
+.profile-name {
+  margin: 20px 0 0 0;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.profile-id {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.profile-desc {
+  font-size: 15px;
+  opacity: 0.6;
+  width: 90%;
+  text-align: center;
+  margin: 0 auto;
+}
