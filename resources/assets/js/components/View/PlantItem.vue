@@ -33,8 +33,8 @@
 
 
         <v-ons-list>
-            <v-ons-list-header>Name</v-ons-list-header>
-            <v-ons-list-item>
+            <v-ons-list-header v-if="plantInfo.title" >Name</v-ons-list-header>
+            <v-ons-list-item v-if="plantInfo.title">
                 <div v-if="plantEdit" class="card-name">{{plantInfo.title}}</div>
                 <div v-else class="card-name">
                     <v-ons-input placeholder="Name" float
@@ -43,8 +43,9 @@
                     </v-ons-input>
                 </div>
             </v-ons-list-item>
-            <v-ons-list-header>Description</v-ons-list-header>
-            <v-ons-list-item>
+
+            <v-ons-list-header  v-if="plantInfo.description">Description</v-ons-list-header>
+            <v-ons-list-item v-if="plantInfo.description">
                 <div v-if="plantEdit" class="card-name"> {{plantInfo.description}}</div>
                 <div v-else class="card-name">
                     <v-ons-input placeholder="Description" float
@@ -53,34 +54,34 @@
                     </v-ons-input>
                 </div>
             </v-ons-list-item>
-            <v-ons-list-header>Scientific classification</v-ons-list-header>
+            <v-ons-list-header v-if="plantInfo.description || plantInfo.scientificName || plantInfo.category || plantInfo.family" >Scientific classification</v-ons-list-header>
             <v-ons-list-item>
                 <table class="w3-table w3-striped">
-                    <tr>
+                    <tr v-if="plantInfo.scientificName" >
                         <th>Scientific Name</th>
-                        <td>{{plantInfo.scientificName}}</td>
+                        <td >{{plantInfo.scientificName}}</td>
                     </tr>
-                    <tr>
+                    <tr v-if="plantInfo.category">
                         <th>Category</th>
                         <td>{{plantInfo.category.name}}</td>
                     </tr>
 
-                    <tr>
+                    <tr v-if="plantInfo.commonName">
                         <th>Common Name</th>
                         <td>{{plantInfo.commonName}}</td>
                     </tr>
-                    <tr>
+                    <tr v-if="plantInfo.distribution">
                         <th>Distribution</th>
                         <td>{{plantInfo.distribution.name}}</td>
                     </tr>
-                    <tr>
+                    <tr v-if="plantInfo.family">
                         <th>Family</th>
                         <td>{{plantInfo.family.name}}</td>
                     </tr><tr>
                     <th>Vegetations</th>
-                    <td>
+                    <td v-if="plantInfo.vegetations">
                         <ul class="w3-ul">
-                            <li v-for="vegetation in plantInfo.vegetations" class="w3-tag w3-blue">{{vegetation.name}}</li>
+                            <li v-for="vegetation in plantInfo.vegetations" class="w3-tag w3-blue">{{vegetation ?vegetation.name : ''}}</li>
                         </ul>
                     </td>
                 </tr>

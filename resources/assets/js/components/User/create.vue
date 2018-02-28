@@ -169,11 +169,23 @@
                             vm.country = ''
                             vm.school = ''
                             vm.field = ''
-                            insertUser(response.data)
+                            insertUser(response.data.created)
+                            new Noty({
+                                timeout: 5000,
+                                type: 'success',
+                                layout: 'topRight',
+                                text: response.data.message
+                            }).show();
                         })
                         .catch(function (error) {
                             vm.loading = false
                             console.log(error);
+                            new Noty({
+                                timeout: 5000,
+                                type: 'error',
+                                layout: 'topRight',
+                                text: error.response.statusText
+                            }).show();
                         });
 
                 }

@@ -2,9 +2,11 @@
     <v-ons-page>
         <v-ons-toolbar>
             <div class="left">
-                <v-ons-back-button>Chat List</v-ons-back-button>
+                <v-ons-toolbar-button @click="changeView">
+                    <v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+                </v-ons-toolbar-button>
             </div>
-            <div class="center">{{getChatInfo}}</div>
+            <div class="center">Contact</div>
         </v-ons-toolbar>
         <virtual-list :size="50" :remain="10" class="list" :start="getStartIndex">
             <div :class="send.to === currentUser? 'receiver-text'  : 'sender-text'"
@@ -256,7 +258,7 @@
     }
 </style>
 <script>
-    import {chatInfo, chats, getCurrent} from  './../Ajax/getData'
+    import {chatInfo, chats, getCurrent, change_view} from  './../Ajax/getData'
 
     export default{
         computed: {
@@ -290,24 +292,24 @@
 
             vm.chatRef = firebase.database().ref().child(`chats/admin`)
             vm.chatRef.on('child_added', function (snapshot) {
-                if ((snapshot.val().to === vm.userId && snapshot.val().from === vm.currentUser) || (snapshot.val().from === vm.userId && snapshot.val().to === vm.currentUser) ) {
+                if ((snapshot.val().to === vm.userId && snapshot.val().from === vm.currentUser) || (snapshot.val().from === vm.userId && snapshot.val().to === vm.currentUser)) {
                     vm.messages.push(snapshot.val())
 
 
                 }
             })
-/*
-            var scroll = this.$refs.messagescreen,
-                scrollInterval = setInterval(function () {
-                    vm.scroll()
-                console.log((scroll.scrollTop + (scroll.scrollHeight - scroll.scrollTop)),  scroll.scrollHeight)
-                if ((scroll.scrollTop + (scroll.scrollHeight - scroll.scrollTop)) === scroll.scrollHeight ) {
-                    console.log('retry finish')
-                    clearInterval(scrollInterval)
-                }else{
-                    console.log('retry')
-                }
-            }, 1000);*/
+            /*
+             var scroll = this.$refs.messagescreen,
+             scrollInterval = setInterval(function () {
+             vm.scroll()
+             console.log((scroll.scrollTop + (scroll.scrollHeight - scroll.scrollTop)),  scroll.scrollHeight)
+             if ((scroll.scrollTop + (scroll.scrollHeight - scroll.scrollTop)) === scroll.scrollHeight ) {
+             console.log('retry finish')
+             clearInterval(scrollInterval)
+             }else{
+             console.log('retry')
+             }
+             }, 1000);*/
 
 
         },
@@ -324,6 +326,10 @@
                     vm.newMessage = ''
                 })
 
+            },
+            changeView(){
+                var vm = this
+                change_view()
             }
         }
     }

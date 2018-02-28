@@ -16,7 +16,7 @@ var __vue_template__ = __webpack_require__(483)
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-36a79e3f"
+var __vue_scopeId__ = "data-v-3d543f23"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -37,9 +37,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-36a79e3f", Component.options)
+    hotAPI.createRecord("data-v-3d543f23", Component.options)
   } else {
-    hotAPI.reload("data-v-36a79e3f", Component.options)
+    hotAPI.reload("data-v-3d543f23", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -61,13 +61,13 @@ var content = __webpack_require__(481);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("25863fb2", content, false);
+var update = __webpack_require__(2)("17fe20be", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-36a79e3f\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Dashboard.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-36a79e3f\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Dashboard.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3d543f23\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Dashboard.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3d543f23\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Dashboard.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -86,7 +86,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Profie */\n\n/* Grid Menu */\n.grid-menu[data-v-36a79e3f] {\n    width: 100%;\n}\n.float-left[data-v-36a79e3f] {\n    float: left;\n}\n.centering-and-alignment[data-v-36a79e3f] {\n    display: box;\n    display: -ms-box;\n    display: -moz-box;\n    display: -o-box;\n    display: -webkit-box;\n    box-align: center;\n    -ms-box-align: center;\n    -moz-box-align: center;\n    -o-box-align: center;\n    -webkit-box-align: center;\n    box-pack: center;\n    -ms-box-pack: center;\n    -moz-box-pack: center;\n    -o-box-pack: center;\n    -webkit-box-pack: center;\n}\n.grid-menu-item[data-v-36a79e3f] {\n    width: 50%;\n    height: 100%;\n    min-width: 100px;\n    min-height: 100px;\n    margin: 0;\n    padding: 0;\n    border-left: 1px solid #cecece !important;\n    border-bottom: 1px solid #cecece !important;\n    font-size: 48px;\n    text-align: center;\n}\n.grid-menu-item[data-v-36a79e3f]:first-child {\n    border-left: none !important;\n}\n.grid-menu-item ons-icon[data-v-36a79e3f] {\n    margin-top: 20px;\n    font-size: 36px;\n}\n.grid-menu-item-label[data-v-36a79e3f] {\n    font-size: 16px;\n}\n.grid-menu-item.topcoat-list__item[data-v-36a79e3f] {\n    border: none;\n}\n\n/* Onsen Ranges */\n.margin-top-adjust[data-v-36a79e3f] {\n    margin-top: -1px;\n}\n.list-item-left[data-v-36a79e3f] {\n    display: inline-block;\n    width: 10%;\n    text-align: center;\n}\n.list-item-center[data-v-36a79e3f] {\n    display: inline-block;\n    width: 75%;\n    text-align: center;\n}\n.range-center[data-v-36a79e3f] {\n    width: 100%;\n    vertical-align: -10px;\n}\n.list-item-right[data-v-36a79e3f] {\n    display: inline-block;\n    width: 10%;\n    text-align: center;\n}\n.lower[data-v-36a79e3f] {\n    opacity: 0.4;\n}\n\n/* Extra style rule for the Home Grid home.html */\n.home-grid[data-v-36a79e3f] {\n    padding: 0 0 20px 0;\n}\n\n/* Fix for Onsen 1.2.2 */\n.navigation-bar__title[data-v-36a79e3f] {\n    text-overflow: ellipsis;\n    overflow: hidden;\n    height: auto;\n}\n.navigation-bar--android__center[data-v-36a79e3f] {\n    max-width: 50%;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.row-center[data-v-36a79e3f] {\n    text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Profie */\n\n/* Grid Menu */\n.grid-menu[data-v-3d543f23] {\n    width: 100%;\n}\n.float-left[data-v-3d543f23] {\n    float: left;\n}\n.centering-and-alignment[data-v-3d543f23] {\n    display: box;\n    display: -ms-box;\n    display: -moz-box;\n    display: -o-box;\n    display: -webkit-box;\n    box-align: center;\n    -ms-box-align: center;\n    -moz-box-align: center;\n    -o-box-align: center;\n    -webkit-box-align: center;\n    box-pack: center;\n    -ms-box-pack: center;\n    -moz-box-pack: center;\n    -o-box-pack: center;\n    -webkit-box-pack: center;\n}\n.grid-menu-item[data-v-3d543f23] {\n    width: 50%;\n    height: 100%;\n    min-width: 100px;\n    min-height: 100px;\n    margin: 0;\n    padding: 0;\n    border-left: 1px solid #cecece !important;\n    border-bottom: 1px solid #cecece !important;\n    font-size: 48px;\n    text-align: center;\n}\n.grid-menu-item[data-v-3d543f23]:first-child {\n    border-left: none !important;\n}\n.grid-menu-item ons-icon[data-v-3d543f23] {\n    margin-top: 20px;\n    font-size: 36px;\n}\n.grid-menu-item-label[data-v-3d543f23] {\n    font-size: 16px;\n}\n.grid-menu-item.topcoat-list__item[data-v-3d543f23] {\n    border: none;\n}\n\n/* Onsen Ranges */\n.margin-top-adjust[data-v-3d543f23] {\n    margin-top: -1px;\n}\n.list-item-left[data-v-3d543f23] {\n    display: inline-block;\n    width: 10%;\n    text-align: center;\n}\n.list-item-center[data-v-3d543f23] {\n    display: inline-block;\n    width: 75%;\n    text-align: center;\n}\n.range-center[data-v-3d543f23] {\n    width: 100%;\n    vertical-align: -10px;\n}\n.list-item-right[data-v-3d543f23] {\n    display: inline-block;\n    width: 10%;\n    text-align: center;\n}\n.lower[data-v-3d543f23] {\n    opacity: 0.4;\n}\n\n/* Extra style rule for the Home Grid home.html */\n.home-grid[data-v-3d543f23] {\n    padding: 0 0 20px 0;\n}\n\n/* Fix for Onsen 1.2.2 */\n.navigation-bar__title[data-v-3d543f23] {\n    text-overflow: ellipsis;\n    overflow: hidden;\n    height: auto;\n}\n.navigation-bar--android__center[data-v-3d543f23] {\n    max-width: 50%;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.row-center[data-v-3d543f23] {\n    text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -397,7 +397,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-36a79e3f", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-3d543f23", module.exports)
   }
 }
 

@@ -2,6 +2,7 @@
     <v-ons-page  id="main">
         <custom-toolbar :title="viewUrls[radioToggle]"
                         v-model="searchQuery"
+                        :isGallery="currentPage.name === 'Gallery'"
                         :selectCount="filtersPlantSelect"
                         :deletePlant="selectedDelete"
                         :show-popover="showPopover"

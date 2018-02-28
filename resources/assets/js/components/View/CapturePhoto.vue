@@ -56,7 +56,14 @@
                                 </div>
                             </v-ons-list-item>
                         </v-ons-list>
-                        <v-ons-list-header>
+                        <v-ons-modal :visible="disabledButton"">
+                            <p style="text-align: center">
+                                Loading <v-ons-icon icon="fa-spinner" spin></v-ons-icon>
+                                <br><br>
+                                Click or wait
+                            </p>
+                        </v-ons-modal>
+                        <v-ons-list-header v-if="getNearestColor">
                             Get nearest color
                         </v-ons-list-header>
                         <v-ons-list>
@@ -271,7 +278,6 @@
                 vm.disabledButton = true
                 FormDataPost(vm.image, hexArray, vm.location.latitude, vm.location.longitude, vm.location.altitude, vm.repositoryInfo.title, vm.repositoryInfo.description, vm.selectedPlant, share)
                     .then(function () {
-                        console.log(data)
                         vm.disabledButton = false
                     }).catch(function () {
                     vm.disabledButton = false

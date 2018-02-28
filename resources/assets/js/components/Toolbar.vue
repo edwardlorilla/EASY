@@ -13,30 +13,26 @@
             </v-ons-toolbar-button>-->
         </div>
         <div class="center" >
-            <div v-if="onHold.handler && mySighting.marker === 0" >{{selectCount.length}} selected</div>
-            <div v-else>
+            <div if="!isGallery">
                 <span v-if="!isSearch">{{title}}</span>
                 <v-ons-search-input style="margin-top: 4px; width: 100%;" v-else :value="my_prop" @input="send($event.target.value)" placeholder="Search something"
                 ></v-ons-search-input>
             </div>
         </div>
         <div class="right"  >
-        <!--<v-ons-toolbar-button v-if="onHold.handler && mySighting.marker === 0"  @click="deletePlant">
-            <v-ons-icon icon="ion-trash-a, material: md-delete"></v-ons-icon>
-        </v-ons-toolbar-button>
-        <div v-else>
-            <v-ons-toolbar-button  v-if="search" @click="searchLocal">
+        <div>
+            <v-ons-toolbar-button  v-if="search && !isGallery" @click="searchLocal">
                 <v-ons-icon icon="ion-search, material: md-search"></v-ons-icon>
             </v-ons-toolbar-button>
             <v-ons-toolbar-button @click="showPopover($event, 'down', true)">
                 <v-ons-icon icon="md-more-vert"></v-ons-icon>
             </v-ons-toolbar-button>
-        </div>-->
+        </div>
 
-            <!--<v-ons-toolbar-button @click="grid" v-if="grid" >
+            <v-ons-toolbar-button @click="grid" v-if="grid" >
 
                 <v-ons-icon :icon="isGrid.view ? 'ion-grid, material: md-apps' : 'ion-ios-list-outline, material: md-format-list-bulleted'"></v-ons-icon>
-            </v-ons-toolbar-button>-->
+            </v-ons-toolbar-button>
 
         </div>
     </v-ons-toolbar>
@@ -50,6 +46,7 @@
             event: 'my_event'
         },
         props: {
+            isGallery: Boolean,
             selectCount: Array,
             showPopover: Function,
             modifier:{

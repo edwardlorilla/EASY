@@ -713,17 +713,10 @@ export function FormDataPost(file, payload, latitude, longitude, altitude, title
 
         return axios.post(url, formData, config)
             .then(function (response) {
-
-                writeData('posts', response.data).then(function () {
-                    readAllData('posts')
-                        .then(function (data) {
-
-                            var allRepositories = data
-                            plantItem.all = allRepositories
-                            getResults.all = allRepositories
-                            plantItem.count = allRepositories.length
-                        });
-                })
+               var post = response.data
+                plantItem.all.unshift(post)
+                getResults.all.unshift(post)
+                plantItem.count = plantItem.length
                 //getData()
 
                // Stack.page.pop();
@@ -752,10 +745,11 @@ export function FormDataPost(file, payload, latitude, longitude, altitude, title
                         if ('indexedDB' in window) {
                             readAllData('posts')
                                 .then(function (data) {
-                                    var allRepositories = data
-                                    plantItem.all = allRepositories
-                                    getResults.all = allRepositories
-                                    plantItem.count = allRepositories.length
+                                    var post = data
+                                    plantItem.all.unshift(post)
+                                    getResults.all.unshift(post)
+                                    plantItem.count = plantItem.length
+
                                 });
                         }
                     })

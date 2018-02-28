@@ -82,7 +82,12 @@ class UserController extends Controller
             $userRef = $db->getReference('users')->push(['display' => $userRegister['name'], 'name' => $user->id ]);
             $userKey = $userRef->getKey();
             //dd(gettype($createUser), $createUser->getIdToken()->getClaims()['user_id']->getValue() );
-            return response($user, 200);
+
+            return response()->json([
+                'message' => 'User ' . $request->name . ' has create',
+                'created' => $user
+            ]);
+            //return response($user, 200);
         }
 
     }

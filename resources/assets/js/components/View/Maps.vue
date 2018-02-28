@@ -429,11 +429,11 @@
                     vm.map.removeLayer(vm.userMarker);
                 }
                 vm.coordinateMap.coords.push(L.latLng(lat, lng));
-                vm.userMarker = L.marker(L.latLng(lat, lng)).addTo(vm.map);
+                vm.userMarker = lat && lng ? L.marker(L.latLng(lat, lng)).addTo(vm.map): null;
                 /*var line = L.polyline(vm.coordinateMap.coords);
                 vm.map.fitBounds(line.getBounds());
                 vm.map.addLayer(line);*/
-                vm.map.panTo([lat, lng], 20)
+                lat && lng ? vm.map.panTo([lat, lng], 20) : null
             },
             onResult(search){
 
