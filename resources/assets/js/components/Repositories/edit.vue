@@ -5,7 +5,8 @@
         </div>
         <div v-if="repositoryEdit.edit " class="w3-row">
             <div class="w3-container w3-half">
-                <img v-if="repositoryEdit.edit.photos && !image" style="width: 90%; object-fit: cover; height:300px;" :src="'/images/' +  repositoryEdit.edit.photos[0].file" alt="">
+                <img v-if="repositoryEdit.edit.photos && !image" style="width: 90%; object-fit: cover; height:300px;"
+                     :src="'/images/' +  repositoryEdit.edit.photos[0].file" alt="">
 
                 <div v-if="!image">
 
@@ -46,10 +47,12 @@
             <div class="w3-container w3-half">
                 <div>
                     <label>Status</label>
-                    <input class="w3-radio" value="1"  v-model.number="repositoryEdit.edit.published" type="radio" name="status">
+                    <input class="w3-radio" value="1" v-model.number="repositoryEdit.edit.published" type="radio"
+                           name="status">
                     <label>Published</label>
 
-                    <input class="w3-radio" value="0" v-model.number="repositoryEdit.edit.published" type="radio" name="status" >
+                    <input class="w3-radio" value="0" v-model.number="repositoryEdit.edit.published" type="radio"
+                           name="status">
                     <label>Unpublished</label>
                 </div>
                 <div class="w3-row-padding">
@@ -130,7 +133,7 @@
                                     {{vegetation.name}}
                                 </option>
                             </select>-->
-                            <el-select v-model="selected.vegetation"  multiple clearable placeholder="Vegetation Type">
+                            <el-select v-model="selected.vegetation" multiple clearable placeholder="Vegetation Type">
                                 <el-option
                                         v-for="vegetation in allId.vegetations"
                                         :key="vegetation.id"
@@ -141,7 +144,8 @@
                         </div>
                         <div class="w3-half">
                             <label>Estimated Density</label>
-                            <select class="w3-select w3-border" v-model="repositoryEdit.edit.estimatedDensity" name="option">
+                            <select class="w3-select w3-border" v-model="repositoryEdit.edit.estimatedDensity"
+                                    name="option">
                                 <option value="" disabled selected>Select Classification</option>
                                 <option v-for="density in estimatedDensity" :value="density.id">
                                     {{density.name}}
@@ -149,14 +153,12 @@
                             </select>
 
 
-
-
                         </div>
                     </div>
 
                     <div class="w3-container w3-center w3-margin-top">
                         <button class="w3-btn w3-ripple w3-large w3-green" @click="addBaseColor">Update Plant</button>
-                        <router-link to="../repositories" class="w3-btn w3-ripple w3-large w3-red">
+                        <router-link to="/repositories" class="w3-btn w3-ripple w3-large w3-red">
                             Cancel
                         </router-link>
                     </div>
@@ -172,7 +174,8 @@
 <style>
 </style>
 <script>
-    import {allId, plantPush,
+    import {
+        allId, plantPush,
         editRepository,
         updateRepository,
         currentPage,
@@ -182,7 +185,8 @@
         cameraInfo,
         urltoFile,
         getSimilar,
-        setSimilar} from './../Ajax/getData'
+        setSimilar
+    } from './../Ajax/getData'
     export default{
         data(){
             return {
@@ -282,7 +286,22 @@
                     hexArray = vm.palletesConvertHex();
                 vm.disabledButton = true
                 //post image, pallete, repository infomation to the database, if the netword is not exist, then gonna go local storage
-                updateRepository(vm.image, vm.repositoryEdit.edit, vm.selected, firebase.auth().currentUser.uid)
+                updateRepository(vm.image, vm.repositoryEdit.edit, vm.selected, firebase.auth().currentUser.uid).then(function (response) {
+                    new Noty({
+                        timeout: 5000,
+                        type: 'success',
+                        layout: 'topRight',
+                        text: response
+                    }).show();
+                    vm.$router.push('/repositories')
+                }).catch(function (error) {
+                    new Noty({
+                        timeout: 5000,
+                        type: 'error',
+                        layout: 'topRight',
+                        text: error.response.statusText
+                    }).show();
+                });
 
             },
         },
@@ -300,8 +319,7 @@
             }
 
         },
-        computed:{
-        },
+        computed: {},
         beforeMount(){
             console.log(1)
         },

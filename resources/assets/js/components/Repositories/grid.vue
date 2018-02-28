@@ -10,9 +10,12 @@
                         <router-link class="w3-left w3-bar-item w3-button w3-green" to="repositories/create">Add
                             Repositories
                         </router-link>
-                        <button @click="isGrid = !isGrid" class="w3-bar-item w3-button w3-teal"><i class='fa'
-                                                                                                   :class="isGrid ? 'fa-th' : 'fa-list'"></i>
+                        <button @click="isGrid = !isGrid; isTable = false" class="w3-bar-item w3-button w3-teal"><i
+                                class='fa' :class="isGrid ? 'fa-th' : 'fa-list'"></i>
                         </button>
+                        <!--<button @click="isTable = true; isGrid  = false" class="w3-bar-item w3-button w3-teal"><i
+                                class='fa fa-table'></i>
+                        </button>-->
                         <input class="w3-right w3-input  w3-border w3-right w3-bar-item" placeholder="Search"
                                v-model="search" type="text">
 
@@ -62,47 +65,50 @@
                     </button>
                     <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Art
                     </button>-->
+                    <div class="w3-row">
+                        <a>
+                            <div class="w3-half tablink w3-bottombar w3-hover-light-grey w3-padding"
+                                 @click="isView = 'published'" :class="isView === 'published' ? 'w3-border-blue' : ''">
+                                Plants
+                            </div>
+                        </a>
+                        <a>
+                            <div class="w3-half tablink w3-bottombar w3-hover-light-grey w3-padding"
+                                 @click="isView = 'shared'" :class="isView === 'shared' ? 'w3-border-blue' : ''">Shared by
+                                the user
+                                <!--<span class="w3-tag w3-tiny w3-blue">{{ chunkItems ?  (chunkItems.length > 0 ? chunkItems.length : '') : ''}}</span>-->
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                <div class="w3-row">
-                    <a>
-                        <div class="w3-half tablink w3-bottombar w3-hover-light-grey w3-padding"
-                             @click="isView = 'published'" :class="isView === 'published' ? 'w3-border-blue' : ''">
-                            Plants
-                        </div>
-                    </a>
-                    <a>
-                        <div class="w3-half tablink w3-bottombar w3-hover-light-grey w3-padding"
-                             @click="isView = 'shared'" :class="isView === 'shared' ? 'w3-border-blue' : ''">Shared by the user
-                            <!--<span class="w3-tag w3-tiny w3-blue">{{ chunkItems ?  (chunkItems.length > 0 ? chunkItems.length : '') : ''}}</span>-->
-                        </div>
-                    </a>
-                </div>
+
             </div>
         </header>
 
         <!-- First Photo Grid-->
-        <div class="w3-content" v-for="items in chunkItems" v-if="items">
-            <div class="w3-row-padding" v-if="isGrid">
-                <photo-grid v-for="(item, index) in items" :edit="editRepository" :key="index" :item="item"
-                            class="w3-third w3-container w3-margin-bottom">
-                </photo-grid>
-            </div>
-            <div v-else class="w3-row w3-margin">
-
-                <div @click="editRepository(items)" class="w3-third">
-                    <img :src="items.photos[0] ? '/images/thumb_' + items.photos[0].file : ''"
-                         :alt="items.title"
-                         style="object-fit: cover;width: 100%; height:150px;" class="w3-hover-opacity">
+        <div>
+            <div  v-for="items in chunkItems" v-if="items">
+                <div class="w3-row-padding" v-if="isGrid && !isTable">
+                    <photo-grid v-for="(item, index) in items" :edit="editRepository" :key="index" :item="item"
+                                class="w3-third w3-container w3-margin-bottom">
+                    </photo-grid>
                 </div>
-                <div class="w3-twothird w3-container">
-                    <h2>{{items.title}}</h2>
-                    <p>
-                        {{items.description ? items.description.substring(0, 231 ) : items.description }}
-                    </p>
+                <div v-else-if="!isGrid && !isTable" class="w3-row w3-margin">
+
+                    <div @click="editRepository(items)" class="w3-third">
+                        <img :src="items.photos[0] ? '/images/thumb_' + items.photos[0].file : ''"
+                             :alt="items.title"
+                             style="object-fit: cover;width: 100%; height:150px;" class="w3-hover-opacity">
+                    </div>
+                    <div class="w3-twothird w3-container">
+                        <h2>{{items.title}}</h2>
+                        <p>
+                            {{items.description ? items.description.substring(0, 231 ) : items.description }}
+                        </p>
+                    </div>
+
                 </div>
-
             </div>
-
         </div>
 
 
@@ -118,6 +124,7 @@
 </style>
 <script>
     import EditView from './edit.vue'
+    import TableView from './../grid/grid.vue'
     import PhotoGrid from './photo_grid.vue'
     import {changeRepository, editRepository}  from './../Ajax/getData'
     export default{
@@ -160,6 +167,8 @@
         },
         data(){
             return {
+                gridColumns: ['title', 'description'],
+                isTable: false,
                 isView: 'published',
                 isGrid: true,
                 pageOne: {

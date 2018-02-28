@@ -267,6 +267,7 @@ class RepositoryController extends Controller
             $query->orderBy('created_at', 'desc');
         }, 'color', 'repository', 'category', 'family', 'vegetations'])
             ->where('id', $repository->id)->first();
+        Cache::forget('user_repository:all');
         return response()->json($repository_json);
     }
 

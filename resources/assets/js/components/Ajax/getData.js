@@ -520,6 +520,7 @@ export function editUser(id){
 export function updateRepository(images, repository, selected, uid){
     var updateRepository = {
         'id' : repository.id,
+        'estimatedDensity' : repository.estimatedDensity,
         'image' : repository.image,
         'palletes' : repository.palletes,
         'title' : repository.title,
@@ -535,13 +536,21 @@ export function updateRepository(images, repository, selected, uid){
         'family': selected.family,
         'category': selected.category,
         'distribution': selected.distribution,
-        'vegetation': selected.vegetation
+        'vegetation': selected.vegetation,
+
     }
     if(images){
         updateRepository.images = images
     }
-    axios.put(`/api/repository/admin/update/${uid}`, updateRepository).then(function(response){
+    return axios.put(`/api/repository/admin/update/${uid}`, updateRepository).then(function(response){
+        var post = response.data
 
+
+        var plantIndex = _.findIndex(plantItem.all, ['id', post.id]);
+        plantItem.all[plantIndex] = post;
+
+
+        return post.title + ' has updated'
     })
 }
 

@@ -1,23 +1,5 @@
 <template>
     <ons-page modifier="full_bg">
-        <!--<v-ons-progress-bar v-show="isDisable.state" indeterminate></v-ons-progress-bar>
-        <slide-fade>
-            <div class="login-form">
-
-                &lt;!&ndash;<input type="email" v-model="loginUser.email" class="text-input&#45;&#45;underbar" placeholder="Email"
-                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="">&ndash;&gt;
-                <input type="text" v-model="loginUser.email" class="text-input&#45;&#45;underbar" placeholder="Username"
-                       value="">
-                <input type="password" v-model="loginUser.password" class="text-input&#45;&#45;underbar" pattern=".{6,}"
-                       placeholder="Password" value="">
-                <br><br>
-                <v-ons-button :disabled="isDisable.state" @click="userLogin" modifier="large" class="login-button">Log In
-                </v-ons-button>
-                <br><br>
-                <v-ons-button modifier="quiet" class="forgot-password">Forgot password?</v-ons-button>
-
-            </div>
-        </slide-fade>-->
 
         <div class="login">
             <div class="login-screen">

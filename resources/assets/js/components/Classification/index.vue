@@ -28,8 +28,7 @@
                         @delete="deleteData($event)"
                         :data=" orderBy(allId.categories, 'updated_at', -1)"
                         :columns="gridColumns"
-                        :filter-key="searchQuery">
-                </grid>
+                        :filter-key="searchQuery"/>
 
 
             </div>

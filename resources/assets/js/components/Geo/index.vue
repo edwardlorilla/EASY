@@ -432,11 +432,13 @@
                 px.y -= e.popup._container.clientHeight / 2
                 map.panTo(map.unproject(px), {animate: true});
             });
-            var bounds = _.map(vm.plantItem.all, function (plant) {
-                return [plant.latitude, plant.longitude]
-            });
-            map.fitBounds(_.compact(bounds));
 
+            var bounds = vm.plantItem.all ?  _.map(vm.plantItem.all, function (plant) {
+                return [plant.latitude, plant.longitude]
+            }) : [];
+                if(bounds){
+                    map.fitBounds(_.compact(bounds));
+                }
             vm.$refs.tile.mapObject.options.subdomains = ['mt0','mt1','mt2','mt3']
         },
         methods: {
