@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','firebase_uid', 'school', 'country', 'field'
+        'name', 'email', 'password','firebase_uid', 'school', 'country', 'field', 'lastName', 'firstName', 'role_id'
     ];
 
     /**
@@ -26,6 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function photo(){
+        return $this->belongsTo(Photo::class);
+    }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 
     public function repositories(){
         return $this->hasMany(Repository::class);

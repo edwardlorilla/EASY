@@ -40,14 +40,13 @@ export var signin = {
                         }).catch(function (error) {
                             changeDisable(false)
                             vm.errors.push(error.message)
-                            vm.$ons.notification.alert(error.message)
-                        })
+                                vm.$ons.notification.alert(error.message)
+                            })
 
                     }else{
                         changeDisable(false)
                         vm.$ons.notification.alert('Invalid username or password')
                     }
-                    vm.$ons.notification.alert(response.data)
                 }).catch(function (error) {
                     changeDisable(false)
                     vm.$ons.notification.alert(error.message)

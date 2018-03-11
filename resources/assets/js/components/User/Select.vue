@@ -1,5 +1,5 @@
 <template>
-    <select class="w3-select w3-border"  v-model="selected" @change="onChange($event.target.value)" required name="country"  id="country">
+    <select class="w3-select w3-border" v-model="selectedOption" @input="onChange($event.target.value)" required name="country"  id="country">
         <option value="0" label="Select a country … " selected="selected">Select a country …       </option>
         <optgroup id="country-optgroup-Africa" label="Africa">
             <option value="DZ" label="Algeria">Algeria</option>
@@ -279,16 +279,20 @@
                 required: false
             }
         },
+        mounted(){
+            this.selectedOption = this.selected;
+            console.log('mounted')
+        },
+        created(){
+          console.log('created')
+        },
         data(){
             return {
-
+                selectedOption:  null
             }
         },
         methods: {
             onChange(value) {
-                if (value === '') {
-                    value = null;
-                }
                 this.$emit('input', value);
             }
         }

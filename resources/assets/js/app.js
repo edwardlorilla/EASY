@@ -44,14 +44,17 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Vue2Leaflet from 'vue2-leaflet';
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
+import VueInitialsImg from 'vue-initials-img';
 Vue.component('v-map', Vue2Leaflet.Map);
 Vue.component('v-tilelayer', Vue2Leaflet.TileLayer);
 Vue.component('v-marker', Vue2Leaflet.Marker);
 Vue.component('v-circle',  Vue2Leaflet.LCircle);
 Vue.component('v-popup', Vue2Leaflet.Popup);
-Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster)
-Vue.use(ElementUI)
+Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster);
 
+
+Vue.use(VueInitialsImg);
+Vue.use(ElementUI)
 Vue.use(VueHotkey)
 Vue.use(Vue2Filters)
 Vue.use(InfiniteScroll)
@@ -59,7 +62,6 @@ Vue.use(VueClazyLoad);
 Vue.use(VueRouter)
 Vue.use(VueRecyclerviewNew)
 Vue.use(VueOnsen);
-
 const router = new VueRouter({
     mode: 'history',
     linkActiveClass: 'w3-blue',

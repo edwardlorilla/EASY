@@ -180,7 +180,7 @@
                             url: 'navigation-map'
                         },
                         {
-                            icon: 'fa-comments',
+                            icon: 'fa-comment',
                             color: 'w3-flat-belize-hole',
                             label: 'Contact Us!',
                             url: 'chat-manage'
@@ -192,13 +192,28 @@
                             color: 'w3-flat-amethyst',
                             label: 'Setting',
                             url: 'view-settings'
-                        }, {
-                        icon: 'fa-history',
-                        color: 'w3-flat-wisteria',
-                        label: 'Recent',
-                        url: 'navigation-timeline'
-                    }
+                        },
+                        {
+                            icon: 'fa-history',
+                            color: 'w3-flat-wisteria',
+                            label: 'Recent',
+                            url: 'navigation-timeline'
+                        }
                     ],
+                    [
+                        {
+                            icon: 'fa-comments',
+                            color: 'w3-flat-alizarin',
+                            label: 'Feedback',
+                            url: 'view-settings'
+                        },
+                        {
+                            icon: 'fa-question-circle',
+                            color: 'w3-flat-pomegranate',
+                            label: 'Help',
+                            url: 'navigation-timeline'
+                        }
+                    ]
                 ]
             }
         },

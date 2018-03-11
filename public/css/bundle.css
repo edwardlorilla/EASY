@@ -7722,14 +7722,6 @@ v-ons-toolbar ~ #map {
   font-size: 13px;
 }
 
-.addMarker {
-  position: fixed;
-  z-index: 401;
-  width: 100%;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
 .autocomplete {
   position: relative;
 }

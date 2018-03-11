@@ -57,6 +57,11 @@ Vue.component('app-browser', function (resolve, reject) {
 });
 
 
+
+Vue.filter('humanReadableTime', function (value) {
+    return moment(value).fromNow();
+});
+
 Vue.component('view-plant', function (resolve, reject) {
     setTimeout(function () {
         resolve(Plant)

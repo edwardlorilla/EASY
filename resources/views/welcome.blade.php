@@ -94,6 +94,7 @@
         {{--{!! style_ts(mix('/css/bundle.css')) !!}
         {!! style_ts(mix('/css/app.css')) !!}--}}
         {!! style_ts('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css') !!}
+        <link rel="stylesheet" href="https://adoroszlai.github.io/leaflet-distance-markers/leaflet-distance-marker.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css">
         <link rel="stylesheet" href="http://turban.github.io/Leaflet.Photo/Leaflet.Photo.css">
         <link rel="stylesheet" href="http://turban.github.io/Leaflet.Photo/examples/css/map.css">
@@ -103,7 +104,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3ki29AJHS78LOsuUmYxBGm_IlXSnL1ow"></script>
-        <script src="https://adoroszlai.github.io/leaflet-distance-markers/lib/leaflet.geometryutil.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/leaflet-geometryutil@0.8.1/src/leaflet.geometryutil.min.js"></script>
         <script src="https://adoroszlai.github.io/leaflet-distance-markers/leaflet-distance-marker.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.0.1/color-thief.min.js"></script>
         <script src="http://turban.github.io/Leaflet.Photo/examples/lib/reqwest.min.js"></script>
@@ -1599,6 +1600,7 @@
 {!! script_ts(mix('/js/app.js')) !!}--}}
 
 <script type="text/javascript" src="http://labs.easyblog.it/maps/leaflet-compass/src/leaflet-compass.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js"></script>
 <script type="text/javascript" src="{{mix('/js/bundle.js')}}"></script>
 <script type="text/javascript" src="{{mix('/js/app.js')}}"></script>
 

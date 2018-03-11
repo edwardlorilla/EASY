@@ -42,12 +42,13 @@
 </style>
 <script>
     import Grid from './../grid/grid.vue'
-    import {allId} from './../Ajax/getData'
+    import {allId,fetchUserActivity} from './../Ajax/getData'
     export default{
         methods: {
             add(){
                 var vm = this
-                axios.post(`/api/${vm.nameKey}/`, {name: vm.plantCategory}).then(function (response) {
+                axios.post(`/api/${vm.nameKey}/`, {name: vm.plantCategory, firebase: firebase.auth().currentUser.uid}).then(function (response) {
+                    fetchUserActivity(response.data.activity)
                     vm.$set(vm.allId.distributions, vm.allId.distributions.length, response.data.created)
                     new Noty({
                         timeout: 5000,
@@ -59,7 +60,8 @@
             },
             deleteData(event){
                 var vm = this
-                axios.delete(`/api/${vm.nameKey}/${event.id}`).then(function (response) {
+                axios.delete(`/api/${vm.nameKey}/${event.id}/${firebase.auth().currentUser.uid}`).then(function (response) {
+                    fetchUserActivity(response.data.activity)
                     var index = _.findIndex(vm.allId.distributions, ['id', event.id]);
                     vm.$delete(vm.allId.distributions, index)
                     new Noty({

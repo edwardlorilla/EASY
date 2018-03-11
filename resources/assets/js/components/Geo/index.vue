@@ -8,7 +8,7 @@
                             <h1>Repositories</h1>
                         </div>
                         <div class="w3-half">
-                            <input class="w3-input w3-border" v-model="search" style="margin-top: 10px;width: 160px;height: 28px;" placeholder="Search.." type="text">
+                            <input class="w3-input w3-border"  v-model="search" style="margin-top: 10px;width: 160px;height: 28px;" placeholder="Search.." type="text">
                         </div>
 
                     </div>
@@ -370,7 +370,7 @@
 </style>
 <script>
 
-    import {plantItem, tileProviders} from './../Ajax/getData'
+    import {plantItem, tileProviders, plantInfoMap} from './../Ajax/getData'
     import PopupContent from './PopupContent.vue';
     import {ChartPie} from 'vue-d2b'
     export default{
@@ -380,6 +380,7 @@
         },
         data(){
             return {
+                plantInfoMap,
                 tileProviders,
                 tileProvider: tileProviders[0],
                 maxZoom: 17,
@@ -440,13 +441,23 @@
                     map.fitBounds(_.compact(bounds));
                 }
             vm.$refs.tile.mapObject.options.subdomains = ['mt0','mt1','mt2','mt3']
+            /*
+            * if the plant edit are call to locate the plant
+            * */
+            if(vm.plantInfoMap.browser){
+                var index = _.findIndex(vm.filters, {id: vm.plantInfoMap.browser.id});
+                vm.getLocation(vm.plantInfoMap.browser.latitude, plantInfoMap.browser.longitude, index)
+            }
         },
         methods: {
             getPhoto(photo){
                 return `${(!_.isUndefined(photo[0]) ? '/images/thumb_' + photo[0].file : '' )}`
             },
+            viewDetail(){
+              console.log('hola')
+            },
             contentPop(title, photos, vegetations, category, distribution, family){
-                return `<div class='leaflet-popup-content' style='width: 201px;'>
+                return `<div class='leaflet-popup-content ' style='width: 201px;'>
                                ${(!_.isUndefined(photos[0]) ? "<img class='w3-round'  style='width: 200px; object-fit: cover; height:150px;' src='images/" + photos[0].file + "'>" : '')}
                                 <h3>${title}</h3>
                                 <table class="w3-table">
@@ -463,7 +474,6 @@
                                   <th>${distribution ? distribution.name : ''}</th>
                                 </tr>
                                 </table>
-                                <a target='_blank' class='url' href=''></a>
                                 </div>`
             },
             iconMarker(item){
@@ -482,11 +492,10 @@
             },
             getLocation(lat, lng, index){
                 var vm = this
-                console.log(index)
                 var marker = vm.$refs.item[index].mapObject
                 var position = L.latLng(lat, lng)
                 var map = vm.$refs.map.mapObject
-//                map.panTo(position);
+
 
                 /*
                  if (!marker._icon) {
@@ -494,7 +503,8 @@
                  }*/
 
                 vm.$refs.markerCluster.mapObject.zoomToShowLayer(marker, function () {
-                    marker.openPopup();
+
+                    return marker.openPopup();
 
                 });
             },

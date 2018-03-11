@@ -4,7 +4,7 @@
         <header id="portfolio">
 
             <div class="w3-container">
-                <h1><b>Repositories of plants</b></h1>
+                <h1><b>Book of flora</b></h1>
                 <div class="w3-section w3-padding-8">
                     <div class="w3-bar">
                         <router-link class="w3-left w3-bar-item w3-button w3-green" to="repositories/create">Add
@@ -67,16 +67,30 @@
                     </button>-->
                     <div class="w3-row">
                         <a>
-                            <div class="w3-half tablink w3-bottombar w3-hover-light-grey w3-padding"
+                            <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding"
                                  @click="isView = 'published'" :class="isView === 'published' ? 'w3-border-blue' : ''">
                                 Plants
                             </div>
                         </a>
+
                         <a>
-                            <div class="w3-half tablink w3-bottombar w3-hover-light-grey w3-padding"
-                                 @click="isView = 'shared'" :class="isView === 'shared' ? 'w3-border-blue' : ''">Shared by
+                            <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding"
+                                 @click="isView = 'shared'" :class="isView === 'shared' ? 'w3-border-blue' : ''">Shared
+                                by
                                 the user
                                 <!--<span class="w3-tag w3-tiny w3-blue">{{ chunkItems ?  (chunkItems.length > 0 ? chunkItems.length : '') : ''}}</span>-->
+                            </div>
+                        </a>
+                        <a>
+                            <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding"
+                                 @click="isView = 'identified'" :class="isView === 'identified' ? 'w3-border-blue' : ''">
+                                Identified Plant
+                            </div>
+                        </a>
+                        <a>
+                            <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding"
+                                 @click="isView = 'unidentified'" :class="isView === 'unidentified' ? 'w3-border-blue' : ''">
+                                Unindentifed Plants
                             </div>
                         </a>
                     </div>
@@ -87,18 +101,19 @@
 
         <!-- First Photo Grid-->
         <div>
-            <div  v-for="items in chunkItems" v-if="items">
+            <div v-for="items in chunkItems" v-if="items">
                 <div class="w3-row-padding" v-if="isGrid && !isTable">
                     <photo-grid v-for="(item, index) in items" :edit="editRepository" :key="index" :item="item"
                                 class="w3-third w3-container w3-margin-bottom">
                     </photo-grid>
                 </div>
-                <div v-else-if="!isGrid && !isTable" class="w3-row w3-margin">
+                <div v-else-if="!isGrid && !isTable" class="w3-row w3-margin" @click="editRepository(items)" >
 
-                    <div @click="editRepository(items)" class="w3-third">
-                        <img :src="items.photos[0] ? '/images/thumb_' + items.photos[0].file : ''"
+                    <div class="w3-third">
+                        <img v-if="items.photos[0]" :src="items.photos[0] ? '/images/thumb_' + items.photos[0].file : ''"
                              :alt="items.title"
                              style="object-fit: cover;width: 100%; height:150px;" class="w3-hover-opacity">
+                        <vue-initials-img size="200" v-else :name="items.title || 'admin'"/>
                     </div>
                     <div class="w3-twothird w3-container">
                         <h2>{{items.title}}</h2>
@@ -126,7 +141,7 @@
     import EditView from './edit.vue'
     import TableView from './../grid/grid.vue'
     import PhotoGrid from './photo_grid.vue'
-    import {changeRepository, editRepository}  from './../Ajax/getData'
+    import {changeRepository, editRepository, togglerViewFunc, togglerView}  from './../Ajax/getData'
     export default{
         mounted(){
             var vm = this
@@ -139,7 +154,17 @@
             },
             editRepository(item){
                 var vm = this
-                vm.$router.push({name: 'edit-repositories', params: {id: item.id}})
+                const loading = this.$loading({
+                    lock: true,
+                    text: 'Loading',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+
+
+                vm.$router.push({name: 'edit-repositories', params: {id: item.id}}, function () {
+                    loading.close()
+                })
             },
             isLength(string){
 
@@ -167,6 +192,7 @@
         },
         data(){
             return {
+                togglerView,
                 gridColumns: ['title', 'description'],
                 isTable: false,
                 isView: 'published',
@@ -209,9 +235,9 @@
                 vm.items ? vm.items.map(function (t) {
                         return t.vegetations;
                     }).forEach(function (a) {
-                        return a.forEach(function (b) {
-                            return allTags.push(b.name);
-                        });
+                        return a ? a.forEach(function (b) {
+                                return allTags.push(b.name);
+                            }) : null;
                     }) : null;
                 return _.uniq(allTags)
             },
@@ -237,7 +263,15 @@
                     selectedDistributions = selectedFilter
                 }
                 return _.filter(selectedDistributions, function (select) {
-                    return vm.isView !== 'shared' ? select.published === 1 : (select.shared === 1 && select.published !== 1)
+                    if(vm.isView === 'shared'){
+                        return select.shared === 1 && select.published !== 1
+                    } else if(vm.isView === 'published'){
+                        return select.published === 1
+                    }else if(vm.isView === 'identified'){
+                        return select.identified === 1
+                    }else{
+                        return select.identified !== 1 && select.shared === 1
+                    }
                 })
             },
             pluckDistributions(){
@@ -277,8 +311,7 @@
                 return (vm.search.trim() === '') ?
                     (vm.isGrid ? _.chunk(vm.selectedDistributions.slice(index, index + vm.pageOne.itemsPerPage), 3) : vm.selectedDistributions.slice(index, index + vm.pageOne.itemsPerPage)) :
                     (vm.isGrid ? _.chunk(vm.fuse.search(vm.search.trim()).slice(index, index + vm.pageOne.itemsPerPage), 3) : vm.fuse.search(vm.search.trim()).slice(index, index + vm.pageOne.itemsPerPage))
-            },
-
+            }
         }
     }
 </script>

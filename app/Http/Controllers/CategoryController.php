@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\LogActivity;
 use App\Helpers;
 use Illuminate\Http\Request;
 
@@ -42,13 +43,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $Category = Category::updateOrCreate(
-            ['name' => $request->name]
-        );
-
+        if(Helpers\check($request->firebase)){
+            $Category = Category::updateOrCreate(
+                ['name' => $request->name]
+            );
+            Helpers\LogActivity::addToLog('Category ' . $request->name . ' has created', $request->firebase, 'fa-tags  w3-text-blue');
+            return response()->json([
+                'message' => 'Category ' . $request->name . ' has created',
+                'created' => $Category,
+                'activity' =>  LogActivity::orderBy('updated_at', 'desc')->paginate(7)
+            ]);
+        }
         return response()->json([
-            'message' => 'Category ' . $request->name . ' has created',
-            'created' => $Category
+            'message' => 'not authorize',
+            'updated' => ''
         ]);
     }
 
@@ -83,13 +91,21 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $query = Category::where('id', $category->id);
-        $query->update(
-            ['name' => $request->name]
-        );
+        if(Helpers\check($request->firebase)){
+            $query = Category::where('id', $category->id);
+            $query->update(
+                ['name' => $request->name]
+            );
+            Helpers\LogActivity::addToLog('Category ' . $request->name . ' has updated', $request->firebase, 'fa-tags  w3-text-green');
+            return response()->json([
+                'message' => 'Category ' . $request->name . ' has updated',
+                'updated' => $query->first(),
+                'activity' =>  LogActivity::orderBy('updated_at', 'desc')->paginate(7)
+            ]);
+        }
         return response()->json([
-            'message' => 'Category ' . $request->name . ' has updated',
-            'updated' => $query->first()
+            'message' => 'not authorize',
+            'updated' => ''
         ]);
     }
 
@@ -101,9 +117,22 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        Category::find($category->id)->delete();
+
+    }
+    public function deleteData($category, $firebase)
+    {
+        $data = Category::where('id', $category)->first();
+        if(Helpers\check($firebase)){
+            $data->delete();
+            Helpers\LogActivity::addToLog( $data->name . ' deleted successfully', $firebase, 'fa-tags  w3-text-red');
+            return response()->json([
+                'message' => $data->name . ' deleted successfully',
+                'activity' =>  LogActivity::orderBy('updated_at', 'desc')->paginate(7)
+            ]);
+        }
         return response()->json([
-            'message' => $category-> name . ' deleted successfully'
+            'message' => 'not authorize',
+            'updated' => ''
         ]);
     }
 }

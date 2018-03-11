@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\LogActivity;
 use App\Vegetation;
 use App\Helpers;
 use Illuminate\Http\Request;
@@ -41,13 +41,20 @@ class VegetationController extends Controller
      */
     public function store(Request $request)
     {
-        $vegetation = Vegetation::updateOrCreate(
-            ['name' => $request->name]
-        );
-
+        if(Helpers\check($request->firebase)){
+            $vegetation = Vegetation::updateOrCreate(
+                ['name' => $request->name]
+            );
+            Helpers\LogActivity::addToLog('Vegetation ' . $request->name . ' has created', $request->firebase, 'fa-sun-o  w3-text-blue');
+            return response()->json([
+                'message' => 'Vegetation ' . $request->name . ' has created',
+                'created' => $vegetation,
+                'activity' =>  LogActivity::orderBy('updated_at', 'desc')->paginate(7)
+            ]);
+        }
         return response()->json([
-            'message' => 'Vegetation ' . $request->name . ' has created',
-            'created' => $vegetation
+            'message' => 'not authorize',
+            'updated' => ''
         ]);
     }
 
@@ -82,13 +89,21 @@ class VegetationController extends Controller
      */
     public function update(Request $request, Vegetation $vegetation)
     {
-        $query = Vegetation::where('id', $vegetation->id);
-        $query->update(
-            ['name' => $request->name]
-        );
+        if(Helpers\check($request->firebase)) {
+            $query = Vegetation::where('id', $vegetation->id);
+            $query->update(
+                ['name' => $request->name]
+            );
+            Helpers\LogActivity::addToLog('Vegetation ' . $request->name . ' has updated', $request->firebase, 'fa-sun-o  w3-text-green');
+            return response()->json([
+                'message' => 'Vegetation ' . $request->name . ' has updated',
+                'updated' => $query->first(),
+                'activity' =>  LogActivity::orderBy('updated_at', 'desc')->paginate(7)
+            ]);
+        }
         return response()->json([
-            'message' => 'Vegetation ' . $request->name . ' has updated',
-            'updated' => $query->first()
+            'message' => 'not authorize',
+            'updated' => ''
         ]);
     }
 
@@ -103,6 +118,23 @@ class VegetationController extends Controller
         Vegetation::find($vegetation->id)->delete();
         return response()->json([
             'message' => $vegetation->name . ' deleted successfully'
+        ]);
+    }
+
+    public function deleteData($vegetation, $firebase)
+    {
+        $data = Vegetation::where('id', $vegetation)->first();
+        if(Helpers\check($firebase)){
+            $data->delete();
+            Helpers\LogActivity::addToLog( $data->name . ' deleted successfully', $firebase, 'fa-sun-o  w3-text-red');
+            return response()->json([
+                'message' => $data->name . ' deleted successfully',
+                'activity' =>  LogActivity::orderBy('updated_at', 'desc')->paginate(7)
+            ]);
+        }
+        return response()->json([
+            'message' => 'not authorize',
+            'updated' => ''
         ]);
     }
 }

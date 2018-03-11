@@ -8,12 +8,6 @@
 </style>
 <script>
     export default{
-        name: 'PopupContent',
-        props: {
-            data: {
-                type: Object,
-                default: () => ({ type: '', color: '#ffffff'}),
-        },
-    }
+        props: []
     }
 </script>

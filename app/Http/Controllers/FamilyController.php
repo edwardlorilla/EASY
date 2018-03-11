@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\LogActivity;
 use App\Family;
 use App\Helpers;
 use Illuminate\Http\Request;
@@ -41,13 +41,21 @@ class FamilyController extends Controller
      */
     public function store(Request $request)
     {
-        $Family = Family::updateOrCreate(
-            ['name' => $request->name]
-        );
+        if(Helpers\check($request->firebase)){
+            $Family = Family::updateOrCreate(
+                ['name' => $request->name]
+            );
+            Helpers\LogActivity::addToLog('Distribution ' . $request->name . ' has created', $request->firebase, 'w3-text-blue fa-pagelines');
+            return response()->json([
+                'message' => 'Family ' . $request->name . ' has created',
+                'created' => $Family,
+                'activity' =>  LogActivity::orderBy('updated_at', 'desc')->paginate(7)
+            ]);
+        }
 
         return response()->json([
-            'message' => 'Family ' . $request->name . ' has created',
-            'created' => $Family
+            'message' => 'not authorize',
+            'updated' => ''
         ]);
     }
 
@@ -82,13 +90,22 @@ class FamilyController extends Controller
      */
     public function update(Request $request, Family $family)
     {
-        $query = Family::where('id', $family->id);
-        $query->update(
-            ['name' => $request->name]
-        );
+        if(Helpers\check($request->firebase)){
+
+            $query = Family::where('id', $family->id);
+            $query->update(
+                ['name' => $request->name]
+            );
+            Helpers\LogActivity::addToLog( 'Distribution ' . $request->name . ' has updated', $request->firebase, ' w3-text-green fa-pagelines');
+            return response()->json([
+                'message' => 'Family ' . $request->name . ' has updated',
+                'updated' => $query->first(),
+                'activity' =>  LogActivity::orderBy('updated_at', 'desc')->paginate(7)
+            ]);
+        }
         return response()->json([
-            'message' => 'Family ' . $request->name . ' has updated',
-            'updated' => $query->first()
+            'message' => 'not authorize',
+            'updated' => ''
         ]);
     }
 
@@ -105,5 +122,21 @@ class FamilyController extends Controller
             return response()->json([
                 'message' => $family-> name . ' deleted successfully'
             ]);
+    }
+    public function deleteData($family, $firebase)
+    {
+        $data = Family::where('id', $family)->first();
+        if(Helpers\check($firebase)){
+            $data->delete();
+            Helpers\LogActivity::addToLog( $data->name . ' deleted successfully', $firebase, 'fa-pagelines  w3-text-red');
+            return response()->json([
+                'message' => $data->name . ' deleted successfully',
+                'activity' =>  LogActivity::orderBy('updated_at', 'desc')->paginate(7)
+            ]);
+        }
+        return response()->json([
+            'message' => 'not authorize',
+            'updated' => ''
+        ]);
     }
 }

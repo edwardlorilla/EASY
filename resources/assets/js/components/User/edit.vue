@@ -95,7 +95,7 @@
                             <div class="w3-third">
                                 <label><b>Country</b></label>
 
-                                <select-input v-model="user.country" :selected="user.country"></select-input>
+                                <select-input v-model="user.country"  :selected="user.country" ></select-input>
                             </div>
                             <div class="w3-third">
                                 <label><b>Field of Study</b></label>
@@ -126,7 +126,9 @@
             </form>
 
             <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-                <button @click="stateModal" type="button"
+                <button @click="stateModal"
+                        :disabled="loading"
+                        type="button"
                         class="w3-button w3-red">Cancel
                 </button>
             </div>
@@ -138,7 +140,7 @@
 </style>
 <script>
     import Select from './Select.vue'
-    import {updateUser} from './../Ajax/getData'
+    import {updateUser,  fetchUserActivity} from './../Ajax/getData'
     export default{
         components:{
             'select-input' : Select
@@ -154,13 +156,14 @@
                 showModal: 'block'
             }
         },
+
         methods: {
             stateModal(){
                 var vm = this
                 vm.showModal == 'none' ? vm.showModal = 'block' : vm.showModal = 'none'
                 if(vm.checkEdit){
                     console.log('wew')
-                    vm.$emit('close')
+                    vm.$emit('close', vm.user)
                 }else{
                     vm.$emit('close', vm.cloneUser)
                 }
@@ -172,10 +175,29 @@
                  })*/
                 //api/user/{user}
                // updateUser(vm.user)
-                axios.put(`/api/user/${vm.user.id}/update/${firebase.auth().currentUser.uid}`, vm.user).then(function () {
+                vm.loading = true
+                axios.put(`/api/user/${vm.user.id}/update/${firebase.auth().currentUser.uid}`, vm.user).then(function (response) {
+                    fetchUserActivity(response.data.activity)
+                    vm.$emit('close', response.data.updated)
+                    vm.loading = false
+                    new Noty({
+                        timeout: 5000,
+                        type: 'success',
+                        layout: 'topRight',
+                        text: response.data.message
+                    }).show();
+                }).catch(function(error) {
+                    vm.loading = false
+                    if(error.response){
+                        new Noty({
+                            timeout: 5000,
+                            type: 'error',
+                            layout: 'topRight',
+                            text: error.response
+                        }).show();
+                    }
+                });
 
-                })
-                vm.$emit('close', vm.user)
             },
         },
         computed: {

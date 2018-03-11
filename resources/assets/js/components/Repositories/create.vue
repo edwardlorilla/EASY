@@ -302,10 +302,22 @@
                 //post image, pallete, repository infomation to the database, if the netword is not exist, then gonna go local storage
                 addRepository(vm.image, hexArray, vm.location, vm.repositoryInfo, vm.selected)
                     .then(function () {
+                        new Noty({
+                            timeout: 5000,
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Successfully Added'
+                        }).show();
                         vm.$router.push('../repositories')
                         vm.disabledButton = false
-                    }).catch(function () {
+                    }).catch(function (error) {
                     vm.disabledButton = false
+                    new Noty({
+                        timeout: 5000,
+                        type: 'error',
+                        layout: 'topRight',
+                        text: error.response.statusText
+                    }).show();
                 })
 
             },

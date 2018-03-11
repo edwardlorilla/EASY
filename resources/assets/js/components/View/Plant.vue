@@ -128,9 +128,10 @@
                                                 </v-ons-checkbox>
                                             </v-ons-col>
                                             <v-ons-col style="width:95px;" @click="getMapInfo(plant.all[index])">
-                                              <img class="thumbnail"
+                                              <img v-if="plant.all[index].photos[0]" class="thumbnail"
                                                     style="object-fit: cover;width: 60px; height:60px;"
-                                                     :src="getPhoto">
+                                                     :src="getPhoto"/>
+                                             <vue-initials-img v-else style="object-fit: cover;width: 60px; height:60px;" :name="plant.all[index].title || 'admin'"/>
                                             </v-ons-col>
                                             <v-ons-col>
                                               <div class="name">
@@ -145,7 +146,10 @@
                                       </v-ons-list-item>
                                     <v-ons-row  v-else >
                                         <v-ons-col  style="width: 60px;"  v-for="(row, index2) in getItem[index]" :key="index2 + '-second'">
-                                          <v-ons-card @click="getMapInfo(row)"><img class="thumbnail" style="object-fit: cover;width: 60px; height:60px;" :src="row.photos | getGridPhoto"/></v-ons-card>
+                                          <v-ons-card @click="getMapInfo(row)">
+                                            <img class="thumbnail" v-if="row.photos[0]" style="object-fit: cover;width: 60px; height:60px;" :src="row.photos | getGridPhoto"/>
+                                             <vue-initials-img v-else style="object-fit: cover;width: 60px; height:60px;" :name="row.title || 'admin'"/>
+                                          </v-ons-card>
                                         </v-ons-col>
                                      </v-ons-row>
                                 </staggered-fade>

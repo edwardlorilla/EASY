@@ -1,18 +1,18 @@
 webpackJsonp([0],{
 
-/***/ 479:
+/***/ 485:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(480)
+  __webpack_require__(486)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(482)
+var __vue_script__ = __webpack_require__(488)
 /* template */
-var __vue_template__ = __webpack_require__(483)
+var __vue_template__ = __webpack_require__(489)
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
@@ -51,17 +51,17 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 480:
+/***/ 486:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(481);
+var content = __webpack_require__(487);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("17fe20be", content, false);
+var update = __webpack_require__(3)("17fe20be", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -78,10 +78,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 481:
+/***/ 487:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)(undefined);
+exports = module.exports = __webpack_require__(2)(undefined);
 // imports
 
 
@@ -93,12 +93,12 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 /***/ }),
 
-/***/ 482:
+/***/ 488:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ajax_getData__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Ajax_getData__ = __webpack_require__(1);
 //
 //
 //
@@ -274,7 +274,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 label: 'Map',
                 url: 'navigation-map'
             }, {
-                icon: 'fa-comments',
+                icon: 'fa-comment',
                 color: 'w3-flat-belize-hole',
                 label: 'Contact Us!',
                 url: 'chat-manage'
@@ -287,6 +287,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 icon: 'fa-history',
                 color: 'w3-flat-wisteria',
                 label: 'Recent',
+                url: 'navigation-timeline'
+            }], [{
+                icon: 'fa-comments',
+                color: 'w3-flat-alizarin',
+                label: 'Feedback',
+                url: 'view-settings'
+            }, {
+                icon: 'fa-question-circle',
+                color: 'w3-flat-pomegranate',
+                label: 'Help',
                 url: 'navigation-timeline'
             }]]
         };
@@ -302,14 +312,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             vm.onBack = true;
         },
         dashView: function dashView(url, name) {
-            Object(__WEBPACK_IMPORTED_MODULE_0__Ajax_getData__["A" /* currentPageSwitcher */])(url, name);
+            Object(__WEBPACK_IMPORTED_MODULE_0__Ajax_getData__["B" /* currentPageSwitcher */])(url, name);
         }
     }
 });
 
 /***/ }),
 
-/***/ 483:
+/***/ 489:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

@@ -88,11 +88,18 @@
                                                 </transition>
                                                 <transition name="fade" slot="placeholder">
                                                     <div class="center" slot="placeholder">
+
                                                         <v-ons-progress-circular
                                                                 indeterminate></v-ons-progress-circular>
                                                     </div>
                                                 </transition>
+
                                             </clazy-load>
+                                            <span class="list-item__title">{{near.hexValue}}</span><span class="list-item__subtitle">{{near.description}}</span>
+                                        </div>
+                                        <div class="right">
+                                            {{near.percentage ? near.percentage.toFixed(2) + ' %' : ''}}
+                                            <!--//percentage: sum() /  hexValue.count * 100-->
                                         </div>
                                         <!-- <div :for="'radio-' + index" class="center">
                                              <span class="list-item__title">{{near.hexValue}}</span><span class="list-item__subtitle">{{near.description}}</span>
@@ -350,7 +357,10 @@
                     hexColorArray = [],
                     hexArray = [],
                     hexColorItem = [],
-                    nearestColor = _.map(vm.baseColor.all, function (o) {
+                    filterColor = _.filter(vm.baseColor.all, function(o){
+                       return o.color
+                    }),
+                    nearestColor = _.map(filterColor, function (o) {
 
                         for (var j = 0; j < hexValue.length; j++) {
                             if (o.color) {
@@ -365,7 +375,8 @@
                                             hexColor: '#' + o.color.colors.split(',')[i],
                                             resultPercentage: hexColor,
                                             hexCompareTo: hexValue[j],
-                                            hexValue: o.title
+                                            hexValue: o.title,
+
                                         })
                                         hexColorItem.push(hexValue[j], hexColor)
                                     }
@@ -381,20 +392,25 @@
                             .groupBy('hexValue')
                             .toPairs()
                             .map(function (currentData) {
+                                console.log(currentData)
                                 currentData.push(currentData[1].length)
                                 currentData.push(currentData[1][0].id)
                                 currentData.push(currentData[1][0].photo)
                                 currentData.push(currentData[1][0].description)
-                                return _.zipObject(["hexValue", "property", "countHex", 'id', 'photo', 'description'], currentData);
+                                currentData.push((_.sumBy(currentData[1], function(o) { return o.resultPercentage; })/ currentData[1].length)*100)
+                                return _.zipObject(["hexValue", "property", "countHex", 'id', 'photo', 'description', 'percentage' ], currentData);
                             })
                             .value();
-                        objectValue.push(hexArrays)
+
+
+
+                            objectValue.push(hexArrays)
                         hexArray = []
                     });
                 ;
                 // return  objectValuevar
                 return _.sortBy(objectValue, function (o, value) {
-                    return o[0] ? o[0].countHex : null
+                    return o[0] ? o[0].percentage : null
                 }).reverse()
             }
         },

@@ -4,6 +4,7 @@ importScripts('/js/idb.js');
 importScripts('/js/utility.js');
 var STATIC_FILES = [
     '/',
+    '/login',
     '/manifest.json',
     '/js/app.js',
     '/js/bundle.js',
@@ -11,10 +12,10 @@ var STATIC_FILES = [
     '/js/idb.js',
     '/js/utility.js',
     '/css/app.css',
-    '/css/bundle.css',
+    '/css/bundle.css'
 ]
-var CACHE_STATIC_NAME = 'static-v67';
-var CACHE_DYNAMIC_NAME = 'dynamic-v53';
+var CACHE_STATIC_NAME = 'static-v70';
+var CACHE_DYNAMIC_NAME = 'dynamic-v56';
 self.addEventListener('install', function (event) {
     console.log('[Service Worker] Installing Service Worker ...', event);
     event.waitUntil(
@@ -55,11 +56,14 @@ var requestedUrl = null;
 self.addEventListener('fetch', function (event) {
 
     var url = new RegExp('/api/repository\/(.*)').test(event.request.url)
-    if(new RegExp('/api\/(.*)\/(.*)').test(event.request.url)){
-        console.log('ignore')
-        return
+    const eventFetch = new URL(event.request.url);
+
+    if (eventFetch.pathname.includes("/api")) {
+
+        return;
     }
     if ( url && event.request.url.indexOf(event.request.url) > -1) {
+
         requestedUrl = event.request.url
         event.respondWith(fetch(event.request)
             .then(function (res) {

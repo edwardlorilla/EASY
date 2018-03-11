@@ -7,7 +7,7 @@
 <script>
     import Grid from './grid.vue';
     import List from './lists.vue';
-    import {plantItem} from './../Ajax/getData'
+        import {plantItem} from './../Ajax/getData'
     export default{
         components: {
             Grid,

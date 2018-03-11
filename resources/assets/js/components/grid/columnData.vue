@@ -36,14 +36,15 @@
 </template>
 
 <script>
-    import {updatePlantItem} from './../Ajax/getData'
+    import {updatePlantItem, fetchUserActivity} from './../Ajax/getData'
     export default{
         props: ['entry', 'nameKey', 'updateKey'],
         data(){
             return {
                 edit: false,
                 editForm: {
-                    name: ''
+                    name: '',
+                    firebase: firebase.auth().currentUser.uid
                 },
             }
         },
@@ -61,6 +62,7 @@
             updateFamily(event){
                 var vm = this
                 axios.patch(`/api/${vm.nameKey}/${event.id}`, vm.editForm).then(function (response) {
+                    fetchUserActivity(response.data.activity)
                     vm.$emit('updateData', response.data.updated)
                     /*vm.entry = response.data.updated
                     updatePlantItem(vm.updateKey, response.data.updated)*/

@@ -484,6 +484,11 @@ export var users = {
 export var list = {
     users:[]
 }
+export var countDashboard ={
+    user: null,
+    share: null,
+    repositories:  null
+}
 export function removeUser(user){
     var userIndex = _.findIndex(list.users, ['id', user.id]);
     list.users.splice(userIndex, 1);
@@ -495,8 +500,32 @@ export function updateUser(user){
 export function insertUser(user){
     list.users.push(user)
 }
-export function listUser(user){
-    list.users = user
+
+
+export var userActivity = {
+    list:[]
+}
+export var userProfile = {
+    user: null
+}
+
+export function fetchUserActivity(activity){
+    userActivity.list = activity.data
+}
+export function profilePage(profile){
+    userProfile.user = profile
+}
+
+export function listUser(user, activity, roles){
+    list.users = user;
+    userActivity.list = activity.data
+    userRoles.name = roles
+    countDashboard.user = list.users.length
+
+}
+
+export var userRoles = {
+    name : null
 }
 
 export var repositoryEdit = {
@@ -507,7 +536,8 @@ export var changeRepository = {
 }
 export function editRepository(id){
     changeRepository.view = ''
-    var repositoryIndex = _.findIndex(plantItem.all, ['id', id]);
+    var repositoryIndex = _.findIndex(plantItem.all, ['id', _.parseInt(id)]);
+    console.log(repositoryIndex, id)
     return plantItem.all[repositoryIndex]
 }
 export function editUser(id){
@@ -537,7 +567,9 @@ export function updateRepository(images, repository, selected, uid){
         'category': selected.category,
         'distribution': selected.distribution,
         'vegetation': selected.vegetation,
-
+        'user_id': repository.user_id,
+        'repository_id': repository.repository_id,
+        'identified': repository.identified
     }
     if(images){
         updateRepository.images = images
@@ -582,7 +614,17 @@ export var user = {
 export function storeUserDetail(user){
     return user.detail = user
 }
+
+export var togglerView = {
+    detail: false
+}
+export function togglerViewFunc(conditional){
+    togglerView.detail = conditional
+}
+
+
 export function getData() {
+
     return get()
         .then(function (response) {
             networkDataReceived = true
@@ -591,9 +633,12 @@ export function getData() {
             var data = response.data
             var allRepositories = data
             plantItem.all = allRepositories
+            countDashboard.repositories = allRepositories.length
             getResults.all = allRepositories
             plantItem.count = allRepositories.length
-
+            countDashboard.share =  _.filter(data, function(count){
+                return  count.shared === 1
+            }).length
 
             for(var i in data){
                 if(data[i].published === 1){
@@ -679,7 +724,11 @@ export function editRepositories(plantInfo){
 
 }
 
+export function removePlant(repository){
+    var index = _.findIndex(plantItem.all, ['id', repository]);
 
+    plantItem.all.splice(index, 1);
+}
 export function toObject(arr) {
     var rv = {};
     for (var i = 0; i < arr.length; ++i)
@@ -724,8 +773,8 @@ export function FormDataPost(file, payload, latitude, longitude, altitude, title
             .then(function (response) {
                var post = response.data
                 plantItem.all.unshift(post)
-                getResults.all.unshift(post)
                 plantItem.count = plantItem.length
+                countDashboard.repositories =  plantItem.length
                 //getData()
 
                // Stack.page.pop();
@@ -756,9 +805,8 @@ export function FormDataPost(file, payload, latitude, longitude, altitude, title
                                 .then(function (data) {
                                     var post = data
                                     plantItem.all.unshift(post)
-                                    getResults.all.unshift(post)
                                     plantItem.count = plantItem.length
-
+                                    countDashboard.repositories = plantItem.length
                                 });
                         }
                     })
@@ -773,7 +821,9 @@ if ('indexedDB' in window) {
                 var allRepositories = data
                 plantItem.all = allRepositories
                 getResults.all = allRepositories
+                countDashboard.repositories = allRepositories.length
                 plantItem.count = allRepositories.length
+
             }
         });
     readAllData('timeline')
@@ -785,6 +835,13 @@ export var timeline = {
     get:[],
     length: 0
 }
+
+
+
+
+
+
+
 export function writeTimeline(data) {
     timeline.get.push(data)
     timeline.length = data.id + 1
@@ -991,3 +1048,27 @@ export var navigationMap = {
 export function mapNavigation(){
     navigationMap.stack.push('capture-photo')
 }
+
+
+export var plantInfoMap = {
+    browser: null
+}
+
+export function plantInfoBrowser(plant){
+    plantInfoMap.browser = plant
+}
+
+export function scientificInformationHandler(familyCount, classificationCount, vegetationCount, distributionCount ){
+    scientificInformationCount.family = familyCount
+    scientificInformationCount.classification = classificationCount
+    scientificInformationCount.vegetation = vegetationCount
+    scientificInformationCount.distribution = distributionCount
+}
+
+export var scientificInformationCount = {
+    family: null,
+    classification: null,
+    vegetation: null,
+    distribution: null
+}
+

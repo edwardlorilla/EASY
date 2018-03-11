@@ -11,17 +11,15 @@
     export default{
 
         data(){
-            return{
-
-            }
+            return {}
         },
         mounted(){
             getData()
         },
-        computed:{
+        computed: {
             currentView(){
-                var vm =  this
-                return vm.$ons.platform.isAndroidPhone() || vm.$ons.platform.isIPhone() ? 'splitter-content' : 'app-browser'
+                var vm = this
+                return vm.$ons.platform.isBlackBerry() || vm.$ons.platform.isAndroidTablet() || vm.$ons.platform.isAndroidPhone() || vm.$ons.platform.isIPhone() || vm.$ons.platform.isIPad() || vm.$ons.platform.isIOS7above()  ? 'splitter-content' : 'app-browser'
             }
         }
     }

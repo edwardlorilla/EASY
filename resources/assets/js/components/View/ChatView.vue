@@ -287,7 +287,7 @@
         mounted(){
             var vm = this
 
-            vm.userId = vm.chats.users.id.toString()
+            vm.userId = 'A2'
             vm.currentUser = vm.getCurrent.user.id.toString()
 
             vm.chatRef = firebase.database().ref().child(`chats/admin`)

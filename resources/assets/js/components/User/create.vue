@@ -13,6 +13,31 @@
             <form class="w3-container">
                 <div class="w3-section">
                     <div class="w3-row-padding">
+                        <div class="w3-third">
+                            <label>Role Type:</label>
+                            <select class="w3-select w3-border" v-model="role_id" name="option">
+                                <option value="" disabled selected>Choose your option</option>
+                                <option v-for="role in userRoles.name" :value="role.id" >{{role.name}}</option>
+
+                            </select>
+                        </div><div class="w3-third">
+                            <label>First name:</label>
+                            <input class="w3-input w3-border w3-margin-bottom"
+                                   type="text"
+                                   v-model="firstName" placeholder="Enter First Name"
+                                   name="firstName"
+                                   required>
+                        </div>
+                        <div class="w3-third">
+                            <label>Last Name:</label>
+                            <input class="w3-input w3-border"
+                                   v-model="lastName"
+                                   type="text"
+                                   placeholder="Enter Last Name"
+                                   name="lastName"
+                                   required>
+                        </div>
+                    </div> <div class="w3-row-padding">
                         <div class="w3-half">
                             <label>Username</label>
                             <input class="w3-input w3-border w3-margin-bottom"
@@ -92,7 +117,7 @@
             </form>
 
             <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-                <button  @click="stateModal" type="button"
+                <button :disabled="loading"  @click="stateModal" type="button"
                         class="w3-button w3-red">Cancel
                 </button>
             </div>
@@ -103,18 +128,22 @@
 </template>
 <script>
     import Select from './Select.vue'
-    import {insertUser} from './../Ajax/getData'
+    import {insertUser, userRoles, fetchUserActivity} from './../Ajax/getData'
     export default{
         components:{
           'select-input' : Select
         },
         data(){
             return{
+                userRoles,
                 showModal: 'block',
                 country: 'PH',
                 school: '',
+                role_id: 5,
                 field: '',
                 name: '',
+                firstName: '',
+                lastName: '',
                 email: '',
                 password: '',
                 password_confirmation: '',
@@ -152,24 +181,30 @@
                     vm.loading = true
                     axios.post('/api/user', {
                         name: vm.name,
+                        firstName: vm.firstName,
+                        lastName: vm.lastName,
                         email: vm.email,
                         password: vm.password,
                         password_confirmation: vm.password_confirmation,
                         country: vm.country,
                         school: vm.school,
+                        role_id: vm.role_id,
                         field: vm.field,
                         uid: firebase.auth().currentUser.uid
                     })
                         .then(function (response) {
+                            fetchUserActivity(response.data.activity)
                             vm.loading = false
                             vm.name = ''
                             vm.email = ''
                             vm.password = ''
+                            vm.role_id = ''
                             vm.password_confirmation = ''
                             vm.country = ''
                             vm.school = ''
                             vm.field = ''
-                            insertUser(response.data.created)
+                            vm.$emit('createUser', response.data.created)
+
                             new Noty({
                                 timeout: 5000,
                                 type: 'success',
@@ -179,13 +214,18 @@
                         })
                         .catch(function (error) {
                             vm.loading = false
-                            console.log(error);
-                            new Noty({
-                                timeout: 5000,
-                                type: 'error',
-                                layout: 'topRight',
-                                text: error.response.statusText
-                            }).show();
+                            if(error.response){
+                                $.each( error.response.data, function( key, value ) {
+                                    for (var i = 0; i < value.length; i++) {
+                                        new Noty({
+                                            timeout: 5000,
+                                            type: 'error',
+                                            layout: 'topRight',
+                                            text: value[i]
+                                        }).show();
+                                    }
+                                });
+                            }
                         });
 
                 }

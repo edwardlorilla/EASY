@@ -1,14 +1,14 @@
 <template>
-   <v-ons-page>
+   <v-ons-page >
        <v-ons-toolbar class="w3-bar w3-top w3-black w3-large" style="z-index:4">
            <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey" @click="w3_open();"><i class="fa fa-bars"></i></button>
            <span class="w3-bar-item w3-right">HAGO</span>
        </v-ons-toolbar>
 
        <!-- Sidebar/menu -->
-       <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" ref="mySidebar" id="mySidebar"><br>
-           <avatar :photo="user.photoURL"
-                   :user="userCurrent"
+       <nav  class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" ref="mySidebar" id="mySidebar"><br>
+           <avatar @updateProfile="userProfile =  $event"
+                   :user="userProfile"
            ></avatar>
            <hr>
            <div class="w3-container">
@@ -53,13 +53,19 @@
 </style>
 <script>
     import {AppMixin} from './AppMixin'
-    import {listUser, fetchAll, getData} from './Ajax/getData'
+    import {listUser, fetchAll, getData, profilePage, scientificInformationHandler} from './Ajax/getData'
     import Avatar from './Avatar.vue'
     import SideBar from './SideBar.vue'
     import MainContent from './MainContent.vue'
 
     export default {
         mixins: [AppMixin],
+        data(){
+           return {
+               userProfile: null,
+               fullscreenLoading: false
+           }
+        },
         methods:{
             w3_open() {
                 var vm = this, mySidebar = vm.$refs.mySidebar, overlayBg = vm.$refs.myOverlay, main = vm.$refs.main
@@ -89,8 +95,17 @@
             }
         },
         mounted(){
+            var vm = this
+            const loading = vm.$loading({
+                lock: true,
+                text: 'Loading',
+                spinner: 'el-icon-loading',
+                background: 'rgba(0, 0, 0, 0.7)'
+            });
             axios.get(`/api/user/${firebase.auth().currentUser.uid}`).then(function (response) {
-                listUser(response.data)
+                vm.userProfile = response.data.user
+                profilePage(response.data.user)
+                listUser(response.data.users, response.data.activity, response.data.roles )
             })
             axios.all([
 
@@ -99,7 +114,9 @@
                 axios.get(`/api/family/${firebase.auth().currentUser.uid}`),
                 axios.get(`/api/vegetation/${firebase.auth().currentUser.uid}`),
             ]).then(axios.spread(function (distribution, category, family, vegetation) {
+                loading.close();
                 fetchAll(distribution.data, category.data, family.data, vegetation.data)
+                scientificInformationHandler(family.data.length, category.data.length, distribution.data.length, vegetation.data.length)
                 getData()
             }));
         },

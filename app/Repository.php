@@ -1,15 +1,16 @@
 <?php
 
 namespace App;
-
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 
 class Repository extends Model
 {
+    use Notifiable;
     protected $fillable = [
         'title', 'specie', 'commonName', 'localName', 'location', 'economicImportance', 'estimatedDensity', 'threats',
         'pathwaySpread', 'remarks', 'description', 'scientificName', 'latitude', 'longitude', 'altitude', 'color_id',
-        'repository_id', 'category_id', 'distribution_id', 'family_id', 'published', 'shared'
+        'repository_id', 'category_id', 'distribution_id', 'family_id', 'published', 'shared', 'identified'
     ];
 
     /**
@@ -52,6 +53,10 @@ class Repository extends Model
     public function repository()
     {
         return $this->belongsTo(Repository::class);
+    }
+    public function repositories()
+    {
+        return $this->hasMany(Repository::class);
     }
 
     /*
